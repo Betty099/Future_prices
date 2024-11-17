@@ -1,0 +1,23 @@
+import pandas as pd
+from html.parser import HTMLParser
+
+import urllib.request
+with urllib.request.urlopen('https://www.eex.com/en/market-data/power/futures#%7B%22snippetpicker%22%3A%2226%22%7D') as response:
+   html = response.read()
+html
+
+
+
+# class MyHTMLParser(HTMLParser):
+#     def handle_starttag(self, tag, attrs):
+#         print("Encountered a start tag:", tag)
+
+#     def handle_endtag(self, tag):
+#         print("Encountered an end tag :", tag)
+
+#     def handle_data(self, data):
+#         print("Encountered some data  :", data)
+
+# parser = MyHTMLParser()
+# parser.feed('<html><head><title>Test</title></head>'
+#             '<body><h1>Parse me!</h1></body></html>')

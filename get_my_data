@@ -1,0 +1,59 @@
+import pandas as pd
+from html.parser import HTMLParser
+
+import urllib.request
+with urllib.request.urlopen('https://www.eex.com/en/market-data/power/futures#%7B%22snippetpicker%22%3A%2226%22%7D') as response:
+   html = response.read()
+html
+
+# different way to call html url
+# html_content = html.decode('utf-8')
+# html_content
+
+from bs4 import BeautifulSoup
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+
+# Configure headless Chrome
+options = Options()
+options.add_argument('--headless')  # Run Chrome in headless mode
+options.add_argument('--disable-gpu')
+options.add_argument('--no-sandbox')
+options.add_argument('--enable-javascript')
+
+# Path to ChromeDriver (replace with the path to your ChromeDriver)
+service = Service('./Chrome_drive/chromedriver-win64/chromedriver.exe')
+
+# Start browser
+driver = webdriver.Chrome(service=service, options=options)
+
+# Open the EEX Market Data URL
+url = 'https://www.eex.com/en/market-data/power/futures'
+driver.get(url)
+
+# Wait for the page to fully load
+import time
+time.sleep(20)
+
+# Extract specific elements (adjust CSS selectors as needed)
+try:
+    # Example: Find a table containing market data
+    # table = driver.find_element(By.ID, "snippet-15")  # Replace with correct selector
+    # print(table)
+    elem = driver.page_source
+    # source_code = elem.get_attribute("outerHTML")
+    for entry in driver.get_log('browser'):
+        print(entry)
+    print(elem)
+finally:
+    driver.quit()
+
+
+
+
+soup = BeautifulSoup(html)
+snippet_23 = soup.select('#snippet-23')
+snippet_23
